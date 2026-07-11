@@ -25,10 +25,15 @@ def move_file(item, category):
     if not destination_folder.exists():
         destination_folder.mkdir()
 
-    destination=destination_folder/item.name
+    destination = destination_folder / item.name
 
-    shutil.move(item,destination)
+    count = 1
+    while destination.exists():
+        new_name = item.stem + " (" + str(count) + ")" + item.suffix
+        destination = destination_folder / new_name
+        count += 1
 
+    shutil.move(item, destination)
 
 folder_path = input("Enter the folder path: ")
 folder = Path(folder_path)
